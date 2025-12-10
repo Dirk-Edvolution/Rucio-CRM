@@ -1,0 +1,5 @@
+{
+  "name": "Rucio CRM 0,2",
+  "description": "A collaborative B2B CRM with AI-powered proposal generation and workspace phases. Deeply integrated into Google Workspace to leverage data generated in Meet, Chat, Drive, Gmail and screenshots.",
+  "requestFramePermissions": []
+}
