@@ -1,5 +1,7 @@
+
 import React from 'react';
 import { Deal } from '../types';
+import { formatCurrency } from '../utils/formatting';
 
 interface DealCardProps {
   deal: Deal;
@@ -47,7 +49,7 @@ export const DealCard: React.FC<DealCardProps> = ({ deal, onOpenCanvas }) => {
            <button 
              onClick={(e) => { e.stopPropagation(); onOpenCanvas(); }}
              className="opacity-0 group-hover:opacity-100 transition-opacity bg-blue-600 text-white p-1.5 rounded-full hover:bg-blue-700 shadow-lg z-10"
-             title="Open Workspace"
+             title="Abrir Espacio de Trabajo"
            >
              <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M15 3h6v6M9 21H3v-6M21 3l-7 7M3 21l7-7"/></svg>
            </button>
@@ -65,7 +67,7 @@ export const DealCard: React.FC<DealCardProps> = ({ deal, onOpenCanvas }) => {
       </div>
 
       <div className="flex items-center justify-between text-xs text-slate-500 pt-3 border-t border-slate-50 relative">
-        <span className="font-medium text-slate-700">${deal.value.toLocaleString()}</span>
+        <span className="font-medium text-slate-700">{formatCurrency(deal.value)}</span>
         
         {/* Health Indicator & Clock */}
         <div className="relative group/health cursor-help flex items-center gap-1.5 p-1 -mr-1 rounded hover:bg-slate-50 transition-colors">
@@ -93,8 +95,8 @@ export const DealCard: React.FC<DealCardProps> = ({ deal, onOpenCanvas }) => {
                 </div>
 
                 <div className="flex justify-between items-center text-[10px] text-slate-400">
-                    <span className="uppercase tracking-wide font-medium">Status: {deal.health.replace('_', ' ')}</span>
-                    <span>{deal.daysDormant === 0 ? 'Active today' : `${deal.daysDormant} days dormant`}</span>
+                    <span className="uppercase tracking-wide font-medium">Estado: {deal.health.replace('_', ' ')}</span>
+                    <span>{deal.daysDormant === 0 ? 'Activo hoy' : `${deal.daysDormant} días inactivo`}</span>
                 </div>
 
                 {/* Arrow */}

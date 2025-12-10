@@ -1,10 +1,18 @@
 
 export type Stage = 'DISCOVER' | 'UNDERSTAND' | 'PROPOSAL' | 'NEGOTIATING' | 'CLOSED';
-export type ViewMode = 'BOARD' | 'CANVAS' | 'CONTACTS' | 'SETTINGS';
+export type ViewMode = 'BOARD' | 'CANVAS' | 'CONTACTS' | 'SETTINGS' | 'ANALYTICS';
 export type HealthStatus = 'HEALTHY' | 'AT_RISK' | 'CRITICAL';
 export type UserRole = 'ADMIN' | 'SALES_REP' | 'FINANCE' | 'SALES_OPS' | 'PS_MANAGER' | 'DELIVERY_MANAGER';
 export type ApprovalStatus = 'PENDING' | 'APPROVED' | 'REJECTED' | 'AUTO_APPROVED';
 export type BuyingRole = 'CHAMPION' | 'ECONOMIC_BUYER' | 'TECHNICAL_EVALUATOR' | 'USER' | 'BLOCKER' | 'COACH' | 'UNKNOWN';
+
+export interface ExchangeRates {
+    EUR: number;
+    CLP: number;
+    MXN: number;
+    COP: number;
+    [key: string]: number;
+}
 
 export interface User {
   id: string;
@@ -81,6 +89,8 @@ export interface OdooLink {
   salesOrderId: string;
   companyId: string; 
   companyName: string;
+  currency: string;
+  totalLocalCurrency: number;
   status: 'DRAFT' | 'SENT' | 'PAID';
   url: string;
 }
@@ -91,7 +101,7 @@ export interface Deal {
   title: string;
   company: string;
   country: string; 
-  value: number;
+  value: number; // Always in USD
   stage: Stage;
   probability: number;
   contactName: string; 
@@ -109,9 +119,10 @@ export interface Deal {
   daysDormant: number;
   aiNextStep: string;
   pendingActions: ActionItem[];
-  // Odoo Integration
+  // Odoo & Finance Integration
   lineItems: LineItem[];
   odooLink?: OdooLink;
+  exchangeRateOverride?: number; // If set, overrides the global rate for this deal
   // Approvals
   approvals: {
     finance: Approval;
@@ -122,11 +133,11 @@ export interface Deal {
 }
 
 export const STAGES: { id: Stage; label: string; color: string }[] = [
-  { id: 'DISCOVER', label: 'Discover', color: 'bg-purple-100 text-purple-800' },
-  { id: 'UNDERSTAND', label: 'Understand', color: 'bg-blue-100 text-blue-800' },
-  { id: 'PROPOSAL', label: 'Proposal', color: 'bg-yellow-100 text-yellow-800' },
-  { id: 'NEGOTIATING', label: 'Negotiating', color: 'bg-orange-100 text-orange-800' },
-  { id: 'CLOSED', label: 'Closed', color: 'bg-green-100 text-green-800' },
+  { id: 'DISCOVER', label: 'Descubrimiento', color: 'bg-purple-100 text-purple-800' },
+  { id: 'UNDERSTAND', label: 'Comprensión', color: 'bg-blue-100 text-blue-800' },
+  { id: 'PROPOSAL', label: 'Propuesta', color: 'bg-yellow-100 text-yellow-800' },
+  { id: 'NEGOTIATING', label: 'Negociación', color: 'bg-orange-100 text-orange-800' },
+  { id: 'CLOSED', label: 'Cerrado', color: 'bg-green-100 text-green-800' },
 ];
 
 export const initialUsers: User[] = [

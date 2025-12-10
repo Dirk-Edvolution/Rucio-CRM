@@ -1,6 +1,8 @@
+
 import React from 'react';
 import { Deal, Stage, STAGES } from '../types';
 import { DealCard } from './DealCard';
+import { formatCurrency } from '../utils/formatting';
 
 interface KanbanBoardProps {
   deals: Deal[];
@@ -47,7 +49,7 @@ export const KanbanBoard: React.FC<KanbanBoardProps> = ({ deals, onDragEnd, onOp
                 <div className={`h-full ${stage.color.split(' ')[0].replace('bg-', 'bg-') || 'bg-slate-400'}`} style={{width: '60%'}}></div>
               </div>
               <p className="text-xs text-slate-500 mt-2 font-medium">
-                ${totalValue.toLocaleString()}
+                {formatCurrency(totalValue)}
               </p>
             </div>
 

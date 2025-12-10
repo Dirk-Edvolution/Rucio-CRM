@@ -7,7 +7,7 @@ import { IntegrationsPanel } from './components/IntegrationsPanel';
 import { ContactsApp } from './components/ContactsApp';
 import { SettingsApp } from './components/SettingsApp';
 import { SmartSearchBar } from './components/SmartSearchBar';
-import { Deal, Stage, initialDeals, ViewMode, STAGES, initialContacts, Contact, User, initialUsers } from './types';
+import { Deal, Stage, initialDeals, ViewMode, STAGES, initialContacts, Contact, User, initialUsers, ExchangeRates } from './types';
 
 const App: React.FC = () => {
   const [deals, setDeals] = useState<Deal[]>(initialDeals);
@@ -15,6 +15,14 @@ const App: React.FC = () => {
   const [users, setUsers] = useState<User[]>(initialUsers);
   const [currentView, setCurrentView] = useState<ViewMode>('BOARD');
   const [activeDealId, setActiveDealId] = useState<string | null>(null);
+  
+  // Exchange Rates State (Quarterly config)
+  const [exchangeRates, setExchangeRates] = useState<ExchangeRates>({
+      EUR: 0.92,
+      CLP: 950.00,
+      MXN: 17.50,
+      COP: 3900.00
+  });
   
   // Auth State (Simulated)
   const [currentUser, setCurrentUser] = useState<User>(initialUsers[0]); // Default to Alex Sales
@@ -122,7 +130,7 @@ const App: React.FC = () => {
                     
                     {/* Role Switcher for Testing */}
                     <div className="flex items-center gap-3">
-                        <span className="text-xs text-slate-400 hidden lg:inline">Viewing as:</span>
+                        <span className="text-xs text-slate-400 hidden lg:inline">Viendo como:</span>
                         <select 
                             value={currentUser.id} 
                             onChange={(e) => handleUserSwitch(e.target.value)}
@@ -137,13 +145,13 @@ const App: React.FC = () => {
             ) : currentView === 'CANVAS' && activeDeal ? (
                 <>
                     <div className="flex items-center gap-4">
-                        <h1 className="text-xl font-bold text-slate-800">Workspace: {activeDeal.title}</h1>
+                        <h1 className="text-xl font-bold text-slate-800">Espacio de Trabajo: {activeDeal.title}</h1>
                         <span className={`px-3 py-1 text-xs font-medium rounded-full ${
                             activeDeal.stage === 'DISCOVER' ? 'bg-purple-100 text-purple-800' :
                             activeDeal.stage === 'UNDERSTAND' ? 'bg-blue-100 text-blue-800' :
                             'bg-slate-100 text-slate-800'
                         }`}>
-                            {activeStageLabel} Phase
+                            Fase: {activeStageLabel}
                         </span>
                     </div>
                     <div className="flex items-center gap-2">
@@ -153,7 +161,9 @@ const App: React.FC = () => {
             ) : (
                  <div className="flex items-center gap-4">
                     <h1 className="text-xl font-bold text-slate-800 capitalize">
-                        {currentView === 'SETTINGS' ? 'Settings & Profile' : currentView.toLowerCase()}
+                        {currentView === 'SETTINGS' ? 'Configuración y Perfil' : 
+                         currentView === 'CONTACTS' ? 'Contactos' :
+                         currentView === 'ANALYTICS' ? 'Analítica' : 'Pipeline'}
                     </h1>
                 </div>
             )}
@@ -181,15 +191,17 @@ const App: React.FC = () => {
                   <div className="w-20 h-20 bg-slate-100 rounded-full flex items-center justify-center mb-4 text-4xl shadow-sm">
                       📊
                   </div>
-                  <h2 className="text-xl font-bold text-slate-700 mb-2">Analytics Dashboard</h2>
+                  <h2 className="text-xl font-bold text-slate-700 mb-2">Tablero Analítico</h2>
                   <p className="max-w-md text-center text-slate-500">
-                      Deep insights into pipeline velocity, conversion rates, and revenue forecasting are being calculated. Check back soon.
+                      Se están calculando métricas profundas sobre la velocidad del pipeline, tasas de conversión y previsión de ingresos. Vuelve pronto.
                   </p>
               </div>
           ) : currentView === 'SETTINGS' ? (
               <SettingsApp 
                 users={users}
                 onUpdateUsers={setUsers}
+                exchangeRates={exchangeRates}
+                onUpdateExchangeRates={setExchangeRates}
               />
           ) : (
             <div className="h-full flex flex-col">
@@ -197,6 +209,7 @@ const App: React.FC = () => {
                 <CanvasWorkspace 
                   deal={activeDeal} 
                   contacts={contacts}
+                  exchangeRates={exchangeRates}
                   onClose={handleCloseCanvas}
                   onUpdateDeal={(updatedDeal) => {
                     setDeals(prev => prev.map(d => d.id === updatedDeal.id ? updatedDeal : d));
@@ -205,7 +218,7 @@ const App: React.FC = () => {
                 />
               ) : (
                 <div className="flex items-center justify-center h-full text-slate-400">
-                  Select a deal to open workspace
+                  Selecciona una oportunidad para abrir el espacio de trabajo
                 </div>
               )}
             </div>

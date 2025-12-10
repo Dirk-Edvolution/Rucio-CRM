@@ -1,10 +1,6 @@
 <div align="center">
-Im tired of CRM's, I think they dont work for the sales rep, all tha data its in their mails, whatsapps, calls, virtual meetings.
-In the era of agenitc we need something to help the reallt empoer the salesrep.
-   So this CRM is for compliance and hygenie, but also integrates a presales that helps the salesrep to have ebyrthing orgnanized, that tell them some ideas during a meeting about success cases and sales plays. 
+<img width="1200" height="475" alt="GHBanner" src="https://github.com/user-attachments/assets/0aa67016-6eaf-458a-adb2-6e31a0763ed6" />
 </div>
-
-I did the mockup with Google AI, planning to make antigravity the devops team, and Claude Code the Dev team.
 
 # Run and deploy your AI Studio app
 

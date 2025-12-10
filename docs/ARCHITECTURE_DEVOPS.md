@@ -8,14 +8,23 @@ The application is designed as a stateless containerized Single Page Application
 
 ### 1.1 Compute & Networking
 *   **Runtime:** Google Cloud Run (Fully Managed).
-*   **Region:** `us-central1` (Low latency for primary user base) or `europe-west1` (GDPR compliance).
+*   **Regions:**
+    *   `us-central1` (Primary / Global)
+    *   `southamerica-west1` (Santiago) - **Optional**: For lower latency in Chile/Latam markets if required by Odoo integration.
 *   **Container Registry:** Google Artifact Registry (Docker format).
 *   **Load Balancing:** Native Cloud Run Load Balancing with automatic HTTPS termination.
 
-### 1.2 Security & Secrets
+### 1.2 Web Server Strategy (Nginx)
+The application uses a multi-stage Docker build:
+1.  **Builder Stage:** Node.js image compiles the React/Vite app to static files (`/dist`).
+2.  **Runner Stage:** Alpine Nginx image serves the static files.
+    *   **Config:** Uses `nginx.conf` at project root.
+    *   **Port:** Exposes port 8080 (Cloud Run default).
+    *   **Routing:** Configured to handle SPA routing (redirecting 404s to `index.html`).
+
+### 1.3 Security & Secrets
 *   **Secret Manager:**
     *   `GEMINI_API_KEY`: Injected at runtime as an environment variable.
-    *   `OAUTH_CLIENT_SECRET`: For Google Workspace server-side flows (future state).
 *   **IAM:**
     *   `Cloud Run Service Agent`: Minimal permissions.
     *   `DevOps Service Account`: Permission to push to Artifact Registry and `run.services.update`.
@@ -48,6 +57,8 @@ The DevOps agent (Antigravity) is responsible for the transition from Code to Cl
 1.  **Checkout:** Pull code from repository.
 2.  **Lint/Test:** Run `npm run lint` and `npm run build` (Defined in SW Factory).
 3.  **Build Container:**
+    *   *Context:* Project Root (`.`).
+    *   *Dockerignore:* Adhere strictly to `.dockerignore` to exclude `node_modules`.
     ```bash
     docker build -t us-central1-docker.pkg.dev/[PROJECT]/rucio-repo/app:$COMMIT_SHA .
     ```

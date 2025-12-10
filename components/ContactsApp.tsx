@@ -1,4 +1,5 @@
 
+
 import React, { useState, useMemo } from 'react';
 import { Contact, Deal, BuyingRole } from '../types';
 
@@ -19,12 +20,12 @@ interface EnrichmentSuggestion {
 
 const BUYING_ROLES: { value: BuyingRole; label: string; icon: string }[] = [
     { value: 'CHAMPION', label: 'Champion', icon: '🏆' },
-    { value: 'ECONOMIC_BUYER', label: 'Economic Buyer', icon: '💰' },
-    { value: 'TECHNICAL_EVALUATOR', label: 'Tech Evaluator', icon: '⚙️' },
-    { value: 'BLOCKER', label: 'Blocker', icon: '🛑' },
+    { value: 'ECONOMIC_BUYER', label: 'Comprador Econ.', icon: '💰' },
+    { value: 'TECHNICAL_EVALUATOR', label: 'Eval. Técnico', icon: '⚙️' },
+    { value: 'BLOCKER', label: 'Bloqueador', icon: '🛑' },
     { value: 'COACH', label: 'Coach', icon: '📣' },
-    { value: 'USER', label: 'End User', icon: '👤' },
-    { value: 'UNKNOWN', label: 'Unknown / TBD', icon: '❓' },
+    { value: 'USER', label: 'Usuario Final', icon: '👤' },
+    { value: 'UNKNOWN', label: 'Desconocido', icon: '❓' },
 ];
 
 export const ContactsApp: React.FC<ContactsAppProps> = ({ 
@@ -78,7 +79,7 @@ export const ContactsApp: React.FC<ContactsAppProps> = ({
     // Simulate AI delay
     setTimeout(() => {
         setIsScanning(false);
-        setScanResult("Found 2 new contacts from recent emails with Acme Corp. Enriched 3 existing profiles.");
+        setScanResult("Se encontraron 2 contactos nuevos en emails recientes con Acme Corp. Se enriquecieron 3 perfiles.");
     }, 2000);
   };
 
@@ -97,7 +98,7 @@ export const ContactsApp: React.FC<ContactsAppProps> = ({
                   field: 'phone',
                   value: '+1 (415) 555-0199',
                   displayValue: '+1 (415) 555-0199',
-                  source: 'Email Signature (Received Oct 24)'
+                  source: 'Firma de Email (Recibido Oct 24)'
               });
           }
 
@@ -108,7 +109,7 @@ export const ContactsApp: React.FC<ContactsAppProps> = ({
                   field: 'linkedin',
                   value: `linkedin.com/in/${contact.name.toLowerCase().replace(/\s+/g, '')}`,
                   displayValue: `linkedin.com/in/${contact.name.toLowerCase().replace(/\s+/g, '')}`,
-                  source: 'LinkedIn Profile Match'
+                  source: 'Coincidencia LinkedIn'
               });
           }
 
@@ -130,13 +131,13 @@ export const ContactsApp: React.FC<ContactsAppProps> = ({
                   field: 'role',
                   value: 'Senior ' + contact.role,
                   displayValue: 'Senior ' + contact.role,
-                  source: 'Email Signature vs Current'
+                  source: 'Firma Email vs Actual'
               });
           }
 
           if (suggestions.length === 0) {
               // Fallback if data is already perfect
-             setScanResult("Profile is up to date based on available data.");
+             setScanResult("El perfil está actualizado según los datos disponibles.");
           }
 
           setEnrichmentSuggestions(suggestions);
@@ -186,8 +187,8 @@ export const ContactsApp: React.FC<ContactsAppProps> = ({
         <div className="bg-white border-b border-slate-200 p-6 shadow-sm z-10">
            <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 mb-6">
                 <div>
-                    <h1 className="text-2xl font-bold text-slate-800">Contacts</h1>
-                    <p className="text-slate-500 text-sm">Manage relationships across all opportunities.</p>
+                    <h1 className="text-2xl font-bold text-slate-800">Contactos</h1>
+                    <p className="text-slate-500 text-sm">Gestiona relaciones en todas las oportunidades.</p>
                 </div>
                 <button 
                   onClick={handleScan}
@@ -197,12 +198,12 @@ export const ContactsApp: React.FC<ContactsAppProps> = ({
                     {isScanning ? (
                         <>
                          <svg className="animate-spin h-4 w-4 text-white" viewBox="0 0 24 24"><circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle><path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path></svg>
-                         Scanning Gmail & LinkedIn...
+                         Escaneando Gmail y LinkedIn...
                         </>
                     ) : (
                         <>
                          <span>✨</span>
-                         Scan for New Contacts
+                         Escanear Nuevos Contactos
                         </>
                     )}
                 </button>
@@ -223,7 +224,7 @@ export const ContactsApp: React.FC<ContactsAppProps> = ({
                    <span className="absolute left-3 top-1/2 -translate-y-1/2 text-slate-400">🔍</span>
                    <input 
                      type="text" 
-                     placeholder="Search by name, email, or company..."
+                     placeholder="Buscar por nombre, email o empresa..."
                      value={searchTerm}
                      onChange={(e) => setSearchTerm(e.target.value)}
                      className="w-full pl-9 pr-4 py-2 bg-slate-100 border-transparent focus:bg-white focus:border-blue-500 border rounded-lg text-sm outline-none transition-all"
@@ -235,7 +236,7 @@ export const ContactsApp: React.FC<ContactsAppProps> = ({
                  onChange={(e) => setSelectedCompany(e.target.value)}
                  className="px-3 py-2 bg-white border border-slate-200 rounded-lg text-sm text-slate-600 focus:border-blue-500 outline-none cursor-pointer"
                >
-                   <option value="All">All Companies</option>
+                   <option value="All">Todas las Empresas</option>
                    {companies.filter(c => c !== 'All').map(c => <option key={c} value={c}>{c}</option>)}
                </select>
 
@@ -246,7 +247,7 @@ export const ContactsApp: React.FC<ContactsAppProps> = ({
                     ${selectedDealId !== 'All' ? 'bg-blue-50 border-blue-200 text-blue-700 font-medium' : 'bg-white border-slate-200 text-slate-600'}
                  `}
                >
-                   <option value="All">Filter by Opportunity</option>
+                   <option value="All">Filtrar por Oportunidad</option>
                    {deals.map(d => (
                        <option key={d.id} value={d.id}>{d.title} ({d.company})</option>
                    ))}
@@ -274,7 +275,7 @@ export const ContactsApp: React.FC<ContactsAppProps> = ({
                                 <div className="flex justify-between items-start">
                                     <h3 className="font-bold text-slate-800 truncate">{contact.name}</h3>
                                     {contact.aiEnriched && (
-                                        <span className="text-[10px] bg-purple-100 text-purple-700 px-1.5 py-0.5 rounded font-bold" title="Enriched by Rucio AI">AI ✨</span>
+                                        <span className="text-[10px] bg-purple-100 text-purple-700 px-1.5 py-0.5 rounded font-bold" title="Enriquecido por Rucio AI">AI ✨</span>
                                     )}
                                 </div>
                                 <p className="text-sm text-slate-500 truncate">{contact.role}</p>
@@ -305,7 +306,7 @@ export const ContactsApp: React.FC<ContactsAppProps> = ({
                                 {contact.tags.length > 2 && <span className="text-[10px] text-slate-400 px-1">+{contact.tags.length - 2}</span>}
                              </div>
                              <button className="text-xs text-blue-600 font-medium opacity-0 group-hover:opacity-100 transition-opacity">
-                                Edit →
+                                Editar →
                              </button>
                         </div>
                     </div>
@@ -314,7 +315,7 @@ export const ContactsApp: React.FC<ContactsAppProps> = ({
             {filteredContacts.length === 0 && (
                 <div className="h-64 flex flex-col items-center justify-center text-slate-400">
                     <span className="text-4xl mb-4">👻</span>
-                    <p>No contacts found matching your filters.</p>
+                    <p>No se encontraron contactos con estos filtros.</p>
                 </div>
             )}
         </div>
@@ -338,7 +339,7 @@ export const ContactsApp: React.FC<ContactsAppProps> = ({
                    
                    {/* Buying Role Selection */}
                    <div className="bg-slate-50 p-4 rounded-xl border border-slate-100">
-                       <label className="block text-xs font-bold text-slate-500 uppercase mb-3">Buying Role (Influence)</label>
+                       <label className="block text-xs font-bold text-slate-500 uppercase mb-3">Rol de Compra (Influencia)</label>
                        <div className="grid grid-cols-2 gap-2">
                            {BUYING_ROLES.map(role => (
                                <button 
@@ -361,17 +362,17 @@ export const ContactsApp: React.FC<ContactsAppProps> = ({
                    <div className="bg-purple-50 border border-purple-100 rounded-xl p-4">
                        <div className="flex items-center gap-2 mb-2">
                            <span className="text-lg">✨</span>
-                           <h3 className="text-sm font-bold text-purple-800">Rucio Intelligence</h3>
+                           <h3 className="text-sm font-bold text-purple-800">Inteligencia Rucio</h3>
                        </div>
 
                        {isEnriching ? (
                            <div className="flex flex-col items-center justify-center py-6 text-purple-600">
                                <svg className="animate-spin h-6 w-6 mb-2" viewBox="0 0 24 24"><circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle><path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path></svg>
-                               <p className="text-xs font-medium">Scanning public data & signatures...</p>
+                               <p className="text-xs font-medium">Escaneando datos públicos y firmas...</p>
                            </div>
                        ) : enrichmentSuggestions.length > 0 ? (
                            <div className="space-y-3">
-                               <p className="text-xs text-purple-700 font-medium">Found {enrichmentSuggestions.length} potential updates:</p>
+                               <p className="text-xs text-purple-700 font-medium">Encontradas {enrichmentSuggestions.length} actualizaciones potenciales:</p>
                                {enrichmentSuggestions.map(suggestion => (
                                    <div key={suggestion.id} className="bg-white p-3 rounded-lg border border-purple-100 shadow-sm animate-in fade-in slide-in-from-top-1">
                                        <div className="flex justify-between items-start mb-1.5">
@@ -384,40 +385,40 @@ export const ContactsApp: React.FC<ContactsAppProps> = ({
                                               onClick={() => acceptSuggestion(suggestion)}
                                               className="flex-1 bg-green-50 text-green-700 border border-green-200 py-1.5 rounded text-xs font-bold hover:bg-green-100 transition-colors"
                                            >
-                                               ✓ Accept
+                                               ✓ Aceptar
                                            </button>
                                            <button 
                                               onClick={() => rejectSuggestion(suggestion.id)}
                                               className="flex-1 bg-white text-slate-500 border border-slate-200 py-1.5 rounded text-xs font-medium hover:bg-slate-50 transition-colors"
                                            >
-                                               ✕ Reject
+                                               ✕ Rechazar
                                            </button>
                                        </div>
                                    </div>
                                ))}
                                {enrichmentSuggestions.length === 0 && (
                                    <div className="text-center py-2 text-xs text-green-600 font-medium">
-                                       All suggestions reviewed!
+                                       ¡Sugerencias revisadas!
                                    </div>
                                )}
                            </div>
                        ) : (
                            <>
                                <p className="text-xs text-purple-700 mb-3 leading-relaxed">
-                                   Scan data sources (LinkedIn, Email Signatures, etc.) to enrich this profile with missing or updated details.
+                                   Escanea fuentes de datos (LinkedIn, Firmas de Email) para enriquecer este perfil con detalles faltantes.
                                </p>
                                <button 
                                  onClick={() => triggerEnrichment(editingContact)}
                                  className="w-full py-2 bg-white border border-purple-200 text-purple-700 rounded-lg text-xs font-bold hover:bg-purple-100 transition-colors shadow-sm flex items-center justify-center gap-2"
                                >
-                                   <span>🔍</span> Scan for Updates
+                                   <span>🔍</span> Escanear Actualizaciones
                                </button>
                            </>
                        )}
                    </div>
 
                    <div>
-                       <label className="block text-xs font-bold text-slate-500 uppercase mb-2">Contact Info</label>
+                       <label className="block text-xs font-bold text-slate-500 uppercase mb-2">Información de Contacto</label>
                        <div className="space-y-4">
                            <div>
                                <span className="text-xs text-slate-400 block mb-1">Email</span>
@@ -429,12 +430,12 @@ export const ContactsApp: React.FC<ContactsAppProps> = ({
                                />
                            </div>
                            <div>
-                               <span className="text-xs text-slate-400 block mb-1">Phone</span>
+                               <span className="text-xs text-slate-400 block mb-1">Teléfono</span>
                                <input 
                                 type="text" 
                                 value={editingContact.phone || ''} 
                                 onChange={(e) => handleInputChange('phone', e.target.value)}
-                                placeholder="Add phone..." 
+                                placeholder="Agregar teléfono..." 
                                 className="w-full text-sm border-b border-slate-200 py-1 focus:border-blue-500 focus:outline-none" 
                                />
                            </div>
@@ -445,7 +446,7 @@ export const ContactsApp: React.FC<ContactsAppProps> = ({
                                         type="text" 
                                         value={editingContact.linkedin || ''} 
                                         onChange={(e) => handleInputChange('linkedin', e.target.value)}
-                                        placeholder="Add LinkedIn URL..." 
+                                        placeholder="Agregar URL LinkedIn..." 
                                         className="flex-1 text-sm border-b border-slate-200 py-1 focus:border-blue-500 focus:outline-none text-blue-600" 
                                     />
                                     {editingContact.linkedin && (
@@ -457,10 +458,10 @@ export const ContactsApp: React.FC<ContactsAppProps> = ({
                    </div>
 
                    <div>
-                       <label className="block text-xs font-bold text-slate-500 uppercase mb-2">Company Details</label>
+                       <label className="block text-xs font-bold text-slate-500 uppercase mb-2">Detalles Empresa</label>
                        <div className="space-y-4">
                            <div>
-                               <span className="text-xs text-slate-400 block mb-1">Company</span>
+                               <span className="text-xs text-slate-400 block mb-1">Empresa</span>
                                <input 
                                 type="text" 
                                 value={editingContact.company} 
@@ -469,17 +470,17 @@ export const ContactsApp: React.FC<ContactsAppProps> = ({
                                />
                            </div>
                            <div>
-                               <span className="text-xs text-slate-400 block mb-1">Location</span>
+                               <span className="text-xs text-slate-400 block mb-1">Ubicación</span>
                                <input 
                                 type="text" 
                                 value={editingContact.location || ''} 
                                 onChange={(e) => handleInputChange('location', e.target.value)}
-                                placeholder="Add location..." 
+                                placeholder="Agregar ubicación..." 
                                 className="w-full text-sm border-b border-slate-200 py-1 focus:border-blue-500 focus:outline-none" 
                                />
                            </div>
                            <div>
-                               <span className="text-xs text-slate-400 block mb-1">Role / Title</span>
+                               <span className="text-xs text-slate-400 block mb-1">Rol / Título</span>
                                <input 
                                 type="text" 
                                 value={editingContact.role || ''} 
@@ -491,7 +492,7 @@ export const ContactsApp: React.FC<ContactsAppProps> = ({
                    </div>
 
                    <div>
-                       <label className="block text-xs font-bold text-slate-500 uppercase mb-2">Associated Deals</label>
+                       <label className="block text-xs font-bold text-slate-500 uppercase mb-2">Oportunidades Asociadas</label>
                        <div className="space-y-2">
                            {deals.filter(d => d.contactIds.includes(editingContact.id)).map(deal => (
                                <div key={deal.id} className="flex items-center gap-2 p-2 rounded-lg bg-slate-50 border border-slate-100">
@@ -505,7 +506,7 @@ export const ContactsApp: React.FC<ContactsAppProps> = ({
                                </div>
                            ))}
                            {deals.filter(d => d.contactIds.includes(editingContact.id)).length === 0 && (
-                               <p className="text-xs text-slate-400 italic">No active deals.</p>
+                               <p className="text-xs text-slate-400 italic">No hay deals activos.</p>
                            )}
                        </div>
                    </div>
@@ -520,7 +521,7 @@ export const ContactsApp: React.FC<ContactsAppProps> = ({
                     }}
                     className="w-full py-2 bg-blue-600 text-white rounded-lg text-sm font-bold shadow-sm hover:bg-blue-700 transition-colors"
                    >
-                       Save Changes
+                       Guardar Cambios
                    </button>
                </div>
           </div>

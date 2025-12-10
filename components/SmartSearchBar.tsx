@@ -1,4 +1,5 @@
 
+
 import React, { useState, useEffect, useRef } from 'react';
 
 interface SmartSearchBarProps {
@@ -43,11 +44,11 @@ export const SmartSearchBar: React.FC<SmartSearchBarProps> = ({ onSearch, curren
   };
 
   const suggestions = [
-    { label: 'Stage', prefix: 'stage', icon: '📊' },
-    { label: 'Country', prefix: 'country', icon: '🌍' },
-    { label: 'Company', prefix: 'company', icon: '🏢' },
-    { label: 'Owner', prefix: 'owner', icon: '👤' },
-    { label: 'Tag', prefix: 'tag', icon: '🏷️' },
+    { label: 'Etapa', prefix: 'stage', icon: '📊' },
+    { label: 'País', prefix: 'country', icon: '🌍' },
+    { label: 'Empresa', prefix: 'company', icon: '🏢' },
+    { label: 'Dueño', prefix: 'owner', icon: '👤' },
+    { label: 'Etiqueta', prefix: 'tag', icon: '🏷️' },
   ];
 
   return (
@@ -59,7 +60,7 @@ export const SmartSearchBar: React.FC<SmartSearchBarProps> = ({ onSearch, curren
         <input
           type="text"
           className="w-full px-3 py-2.5 bg-transparent outline-none text-slate-700 placeholder:text-slate-400"
-          placeholder={`Search deals, contacts, or type 'country:USA'...`}
+          placeholder={`Buscar oportunidades, contactos o escribe 'country:USA'...`}
           value={query}
           onChange={handleChange}
           onFocus={() => setShowSuggestions(true)}
@@ -78,7 +79,7 @@ export const SmartSearchBar: React.FC<SmartSearchBarProps> = ({ onSearch, curren
       {showSuggestions && (
         <div className="absolute top-full left-0 right-0 mt-2 bg-white rounded-xl shadow-xl border border-slate-100 p-2 z-50 animate-in fade-in slide-in-from-top-1 duration-200">
            <div className="text-[10px] font-bold text-slate-400 uppercase tracking-wider mb-2 px-2 pt-1">
-              Smart Filters
+              Filtros Inteligentes
            </div>
            <div className="flex flex-wrap gap-2 px-2 pb-2">
               {suggestions.map(s => (
@@ -94,12 +95,12 @@ export const SmartSearchBar: React.FC<SmartSearchBarProps> = ({ onSearch, curren
            </div>
            {currentUserRole !== 'SALES_REP' && (
                <div className="px-3 py-2 text-xs text-slate-400 border-t border-slate-50 mt-1 italic">
-                   Showing all deals (Admin/Manager view)
+                   Mostrando todas las oportunidades (Vista Admin/Manager)
                </div>
            )}
            {currentUserRole === 'SALES_REP' && (
                <div className="px-3 py-2 text-xs text-blue-600 border-t border-slate-50 mt-1 bg-blue-50/50 rounded-b-lg flex items-center gap-2">
-                   <span>🔒</span> Only showing your owned opportunities
+                   <span>🔒</span> Solo mostrando tus oportunidades
                </div>
            )}
         </div>
